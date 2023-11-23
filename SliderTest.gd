@@ -2,7 +2,7 @@ extends Control
 
 
 # Declare member variables here. Examples:
-onready var HSliderRange = $VBoxContainer/VBoxContainer/MarginContainer/HSliderRange
+@onready var HSliderRange = $VBoxContainer/VBoxContainer/MarginContainer/HSliderRange
 
 
 # Called when the node enters the scene tree for the first time.
@@ -21,8 +21,8 @@ func _on_UpdateButton_button_up():
 	HSliderRange.max_value = $VBoxContainer/Panel/HBoxContainer/MaxSpinBox.value
 	HSliderRange.range_gap = $VBoxContainer/Panel/HBoxContainer/GapSpinBox.value
 	HSliderRange.overflow_buffer = $VBoxContainer/Panel/HBoxContainer/BufferSpinBox.value
-	HSliderRange.allow_lesser = $VBoxContainer/Panel/HBoxContainer/LesserCheckBox.pressed
-	HSliderRange.allow_greater = $VBoxContainer/Panel/HBoxContainer/GreaterCheckBox.pressed
+	HSliderRange.allow_lesser = $VBoxContainer/Panel/HBoxContainer/LesserCheckBox.button_pressed
+	HSliderRange.allow_greater = $VBoxContainer/Panel/HBoxContainer/GreaterCheckBox.button_pressed
 	pass # Replace with function body.
 
 

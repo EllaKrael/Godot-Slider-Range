@@ -1,46 +1,46 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=8 format=3 uid="uid://chee61rqm3kbb"]
 
-[ext_resource path="res://SliderRange.gd" type="Script" id=1]
-[ext_resource path="res://Grabber.png" type="Texture" id=2]
-[ext_resource path="res://GrabberHighlight.png" type="Texture" id=3]
-[ext_resource path="res://SliderTest.gd" type="Script" id=4]
+[ext_resource type="Script" path="res://SliderRange.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://diaics8owbrdc" path="res://Grabber.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://bnj5x3lmlv33p" path="res://GrabberHighlight.png" id="3"]
+[ext_resource type="Script" path="res://SliderTest.gd" id="4"]
 
-[sub_resource type="ImageTexture" id=1]
+[sub_resource type="ImageTexture" id="3"]
 
-[sub_resource type="ImageTexture" id=2]
+[sub_resource type="ImageTexture" id="2"]
 
-[sub_resource type="ImageTexture" id=3]
+[sub_resource type="ImageTexture" id="1"]
 
 [node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 4 )
+script = ExtResource("4")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_constants/separation = 8
+theme_override_constants/separation = 8
 
 [node name="Panel" type="Panel" parent="VBoxContainer"]
-margin_right = 1024.0
-margin_bottom = 36.0
-rect_min_size = Vector2( 0, 36 )
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Panel"]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_constants/separation = 8
+theme_override_constants/separation = 8
 
 [node name="Control" type="Control" parent="VBoxContainer/Panel/HBoxContainer"]
-margin_right = 446.0
-margin_bottom = 36.0
+layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="GapSpinBox" type="SpinBox" parent="VBoxContainer/Panel/HBoxContainer"]
-margin_left = 454.0
-margin_right = 574.0
-margin_bottom = 36.0
-rect_min_size = Vector2( 120, 0 )
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
 value = 1.0
 allow_greater = true
 allow_lesser = true
@@ -48,137 +48,113 @@ prefix = "Gap"
 
 [node name="BufferSpinBox" type="SpinBox" parent="VBoxContainer/Panel/HBoxContainer"]
 visible = false
-margin_left = 454.0
-margin_right = 574.0
-margin_bottom = 36.0
-rect_min_size = Vector2( 120, 0 )
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
 allow_greater = true
 allow_lesser = true
 prefix = "Buffer"
 
 [node name="LesserCheckBox" type="CheckBox" parent="VBoxContainer/Panel/HBoxContainer"]
 visible = false
-margin_left = 465.0
-margin_right = 574.0
-margin_bottom = 36.0
+layout_mode = 2
 text = "Allow Lesser"
 
 [node name="GreaterCheckBox" type="CheckBox" parent="VBoxContainer/Panel/HBoxContainer"]
 visible = false
-margin_left = 459.0
-margin_right = 574.0
-margin_bottom = 36.0
+layout_mode = 2
 text = "Allow Greater"
 
 [node name="MinSpinBox" type="SpinBox" parent="VBoxContainer/Panel/HBoxContainer"]
-margin_left = 582.0
-margin_right = 702.0
-margin_bottom = 36.0
-rect_min_size = Vector2( 120, 0 )
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
 allow_greater = true
 allow_lesser = true
 prefix = "Min"
 
 [node name="StepSpinBox" type="SpinBox" parent="VBoxContainer/Panel/HBoxContainer"]
-margin_left = 710.0
-margin_right = 830.0
-margin_bottom = 36.0
-rect_min_size = Vector2( 120, 0 )
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
 min_value = 1.0
 max_value = 10.0
 value = 1.0
 prefix = "Step"
 
 [node name="MaxSpinBox" type="SpinBox" parent="VBoxContainer/Panel/HBoxContainer"]
-margin_left = 838.0
-margin_right = 958.0
-margin_bottom = 36.0
-rect_min_size = Vector2( 120, 0 )
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
 value = 100.0
 allow_greater = true
 allow_lesser = true
 prefix = "Max"
 
 [node name="UpdateButton" type="Button" parent="VBoxContainer/Panel/HBoxContainer"]
-margin_left = 966.0
-margin_right = 1024.0
-margin_bottom = 36.0
+layout_mode = 2
 text = "Update"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
-margin_top = 44.0
-margin_right = 1024.0
-margin_bottom = 556.0
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/VBoxContainer"]
-margin_top = 248.0
-margin_right = 1024.0
-margin_bottom = 264.0
-custom_constants/margin_right = 11
-custom_constants/margin_left = 11
+layout_mode = 2
+theme_override_constants/margin_left = 11
+theme_override_constants/margin_right = 11
 
 [node name="HSliderRange" type="HSlider" parent="VBoxContainer/VBoxContainer/MarginContainer"]
-margin_left = 11.0
-margin_right = 1013.0
-margin_bottom = 16.0
-custom_icons/grabber_disabled = SubResource( 1 )
-custom_icons/grabber_highlight = SubResource( 2 )
-custom_icons/grabber = SubResource( 3 )
-script = ExtResource( 1 )
+layout_mode = 2
+theme_override_icons/grabber = SubResource("3")
+theme_override_icons/grabber_highlight = SubResource("2")
+theme_override_icons/grabber_disabled = SubResource("1")
+editable = false
+script = ExtResource("1")
 grabber_min_nodepath = NodePath("Min")
 grabber_max_nodepath = NodePath("Max")
 
 [node name="Min" type="TextureButton" parent="VBoxContainer/VBoxContainer/MarginContainer/HSliderRange"]
+layout_mode = 0
 anchor_top = 0.5
 anchor_bottom = 0.5
-margin_left = -10.0
-margin_top = -10.0
-margin_right = 10.0
-margin_bottom = 10.0
-texture_normal = ExtResource( 2 )
-texture_pressed = ExtResource( 3 )
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+texture_normal = ExtResource("2")
+texture_pressed = ExtResource("3")
 
 [node name="Max" type="TextureButton" parent="VBoxContainer/VBoxContainer/MarginContainer/HSliderRange"]
+layout_mode = 0
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-margin_left = -10.0
-margin_top = -10.0
-margin_right = 10.0
-margin_bottom = 10.0
-texture_normal = ExtResource( 2 )
-texture_pressed = ExtResource( 3 )
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+texture_normal = ExtResource("2")
+texture_pressed = ExtResource("3")
 
 [node name="Panel2" type="Panel" parent="VBoxContainer"]
-margin_top = 564.0
-margin_right = 1024.0
-margin_bottom = 600.0
-rect_min_size = Vector2( 0, 36 )
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Panel2"]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_constants/separation = 8
+theme_override_constants/separation = 8
 alignment = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/Panel2/HBoxContainer"]
-margin_right = 1024.0
-margin_bottom = 36.0
+layout_mode = 2
 size_flags_horizontal = 3
-custom_constants/margin_right = 11
-custom_constants/margin_left = 11
+theme_override_constants/margin_left = 11
+theme_override_constants/margin_right = 11
 
 [node name="Label" type="Label" parent="VBoxContainer/Panel2/HBoxContainer/MarginContainer"]
-margin_left = 11.0
-margin_top = 11.0
-margin_right = 1013.0
-margin_bottom = 25.0
-align = 2
-valign = 1
+layout_mode = 2
 
 [connection signal="button_up" from="VBoxContainer/Panel/HBoxContainer/UpdateButton" to="." method="_on_UpdateButton_button_up"]
 [connection signal="range_changed" from="VBoxContainer/VBoxContainer/MarginContainer/HSliderRange" to="." method="_on_HSliderRange_range_changed"]
