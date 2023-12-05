@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://chee61rqm3kbb"]
 
 [ext_resource type="Script" path="res://SliderRange.gd" id="1"]
-[ext_resource type="Texture2D" uid="uid://diaics8owbrdc" path="res://Grabber.png" id="2"]
-[ext_resource type="Texture2D" uid="uid://bnj5x3lmlv33p" path="res://GrabberHighlight.png" id="3"]
+[ext_resource type="Texture2D" uid="uid://k1pxlhav4rdj" path="res://Grabber.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://bg64spcd07wxm" path="res://GrabberHighlight.png" id="3"]
 [ext_resource type="Script" path="res://SliderTest.gd" id="4"]
 
 [sub_resource type="ImageTexture" id="3"]
@@ -16,6 +16,8 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("4")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
@@ -155,6 +157,8 @@ theme_override_constants/margin_right = 11
 
 [node name="Label" type="Label" parent="VBoxContainer/Panel2/HBoxContainer/MarginContainer"]
 layout_mode = 2
+horizontal_alignment = 2
+vertical_alignment = 1
 
 [connection signal="button_up" from="VBoxContainer/Panel/HBoxContainer/UpdateButton" to="." method="_on_UpdateButton_button_up"]
 [connection signal="range_changed" from="VBoxContainer/VBoxContainer/MarginContainer/HSliderRange" to="." method="_on_HSliderRange_range_changed"]
