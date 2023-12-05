@@ -23,15 +23,19 @@ signal range_max_changed(new_max)
 # We will ignore the value property of slider and use range_min and range_max as our value holders
 export var range_min: float = 0 setget set_range_min
 func set_range_min(new_value: float):
-	if range_min < min_value and not allow_lesser:
-		range_min = min_value
+	new_value = _validate_range_min(new_value)
+	if new_value != range_min:
+		#emit_signal("range_min_changed", range_min)
+		pass
 	range_min = new_value
 	handle_grabber_changed(DraggingHandle.Min)
 
 export var range_max: float = 100 setget set_range_max
 func set_range_max(new_value: float):
-	if new_value > max_value and not allow_greater:
-		new_value = max_value
+	new_value = _validate_range_max(new_value)
+	if new_value != range_max:
+		#emit_signal("range_max_changed", range_max)
+		pass
 	range_max = new_value
 	handle_grabber_changed(DraggingHandle.Max)
 
@@ -134,6 +138,15 @@ func _process(delta):
 	pass
 
 
+func get_position_along_bar(value_to_calculate: float, offset_by: float = 0.0):
+	var overflow_by = 0.0
+	var value_to_portray = value_to_calculate - min_value
+	var bar_tick = slider.rect_size.x / abs(min_value - max_value)
+	if ((value_to_portray < min_value and allow_lesser) or (value_to_portray > max_value and allow_greater)) and overflow_buffer > 0.0:
+		overflow_by = (0 - overflow_buffer) if (value_to_portray < min_value) else (0 + overflow_buffer)
+	return (bar_tick * value_to_portray) - offset_by + overflow_by
+
+
 func update_grabber(method, force: bool = false):
 	# Set for Min
 	if method == DraggingHandle.Min and (force or grabber_min == null):
@@ -197,6 +210,8 @@ func handle_grabber_move(method):
 			return
 		var overflow_by = 0.0
 		var value_to_portray = (min_value if range_min < min_value else range_min) - min_value
+		if allow_greater and range_min > max_value: # correct for overflow on + max_value
+			value_to_portray = (max_value if range_max > max_value else range_max) - min_value
 		if allow_lesser and overflow_buffer > 0.0 and range_min < min_value:
 			overflow_by = overflow_buffer # handle allow_lesser with overflow_buffer
 		grabber_min.rect_position = Vector2((drag_tick * value_to_portray) - fetch_grabber_center(method, grabber_min) - overflow_by, grabber_min.rect_position.y)
@@ -205,6 +220,8 @@ func handle_grabber_move(method):
 			return 
 		var overflow_by = 0.0
 		var value_to_portray = (max_value if range_max > max_value else range_max) - min_value
+		if allow_lesser and range_max < min_value: # correct for overflow on - min_value
+			value_to_portray = (min_value if range_min < min_value else range_min) - min_value
 		if allow_greater and overflow_buffer > 0.0 and range_max > max_value:
 			overflow_by = overflow_buffer # handle allow_greater with overflow_buffer
 		grabber_max.rect_position = Vector2((drag_tick * value_to_portray) - fetch_grabber_center(method, grabber_max) + overflow_by, grabber_max.rect_position.y) 
@@ -251,6 +268,22 @@ func _drag_element_begin(method):
 			last_position = null
 
 
+func _validate_range_min(new_value: float) -> float:
+	if new_value >= (range_max - (range_gap * step)):
+		new_value = (range_max - (range_gap * step))
+	elif (new_value < min_value and not allow_lesser):
+		new_value = min_value
+	return new_value
+
+
+func _validate_range_max(new_value: float) -> float:
+	if (new_value) <= (range_min + (range_gap * step)):
+		new_value = (range_min + (range_gap * step))
+	elif (new_value > max_value and not allow_greater):
+		new_value = max_value
+	return new_value
+
+
 func _drag_element_along_x(grabber: Node, dragged_position: Vector2):
 	# calculate drag travel
 	var distance_travelled = dragged_position - last_position
@@ -264,21 +297,11 @@ func _drag_element_along_x(grabber: Node, dragged_position: Vector2):
 	# calculate representing value and emit
 	match drag_handle:
 		DraggingHandle.Min:
-			if (range_min + value_adjust) >= (range_max - (range_gap * step)):
-				range_min = range_max - (range_gap * step)
-				value_adjust = 0
-			elif ((range_min + value_adjust) < min_value and not allow_lesser):
-				return
-			range_min += value_adjust
+			range_min = _validate_range_min(range_min + value_adjust)
 			emit_signal("range_min_changed", range_min)
 			pass
 		DraggingHandle.Max:
-			if (range_max + value_adjust) <= (range_min + (range_gap * step)):
-				range_max = range_min + (range_gap * step)
-				value_adjust = 0
-			elif ((range_max + value_adjust) > max_value and not allow_greater):
-				return
-			range_max += value_adjust
+			range_max = _validate_range_max(range_max + value_adjust)
 			emit_signal("range_max_changed", range_max)
 			pass
 		_:
